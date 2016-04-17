@@ -66,18 +66,27 @@ namespace UNiDAYSHomework.Controllers
         public void InsertUser(User newUser)
         {
             string query = "insert into Users (UserID, EmailAddress, Password) values (@UserID, @EmailAddress, @Password)";
-            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["UNiDAYSDB"].ConnectionString);
-            con.Open();
-            SqlCommand cmd = con.CreateCommand();
-            cmd.CommandText = query;
-            
-            //parameterize values to prevent SQL injections
-            cmd.Parameters.AddWithValue("@UserID", newUser.UserID);
-            cmd.Parameters.AddWithValue("@EmailAddress", newUser.EmailAddress);
-            cmd.Parameters.AddWithValue("@Password", newUser.Password);
 
-            int res = cmd.ExecuteNonQuery();
-            con.Close();
+            //using ensures that the connection and command are disposed of even if an exception occurs
+            //this is due to SqlConnection and SqlCommand both implementing the IDisposable interface
+            using (
+                SqlConnection con =
+                    new SqlConnection(WebConfigurationManager.ConnectionStrings["UNiDAYSDB"].ConnectionString))
+            using (SqlCommand cmd = con.CreateCommand())
+            {
+                con.Open();
+
+                cmd.CommandText = query;
+
+                //parameterize values to prevent SQL injections
+                cmd.Parameters.AddWithValue("@UserID", newUser.UserID);
+                cmd.Parameters.AddWithValue("@EmailAddress", newUser.EmailAddress);
+                cmd.Parameters.AddWithValue("@Password", newUser.Password);
+
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            //con and cmd will be disposed of here, as we're not longer in scope of the using statements
         }
     }
 }
