@@ -52,13 +52,16 @@ namespace UNiDAYSHomework.Controllers
         //general MD5 encryption 
         public static string Encrypt(string stringToEncrypt)
         {
-            MD5CryptoServiceProvider x = new MD5CryptoServiceProvider();
+
             byte[] bs = Encoding.UTF8.GetBytes(stringToEncrypt);
-            bs = x.ComputeHash(bs);
             StringBuilder s = new StringBuilder();
-            foreach (byte b in bs)
+            using (MD5CryptoServiceProvider x = new MD5CryptoServiceProvider())
             {
-                s.Append(b.ToString("x2").ToLower());
+                bs = x.ComputeHash(bs);
+                foreach (byte b in bs)
+                {
+                    s.Append(b.ToString("x2").ToLower());
+                }
             }
             return s.ToString();
         }
