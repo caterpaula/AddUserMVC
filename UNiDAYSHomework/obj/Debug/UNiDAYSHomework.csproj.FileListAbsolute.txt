@@ -44,10 +44,6 @@ c:\users\paula\documents\visual studio 2015\Projects\UNiDAYSHomework\UNiDAYSHome
 c:\users\paula\documents\visual studio 2015\Projects\UNiDAYSHomework\UNiDAYSHomework\obj\Debug\UNiDAYSHomework.csprojResolveAssemblyReference.cache
 c:\users\paula\documents\visual studio 2015\Projects\UNiDAYSHomework\UNiDAYSHomework\obj\Debug\UNiDAYSHomework.dll
 c:\users\paula\documents\visual studio 2015\Projects\UNiDAYSHomework\UNiDAYSHomework\obj\Debug\UNiDAYSHomework.pdb
-c:\users\paula\documents\visual studio 2015\Projects\UNiDAYSHomework\UNiDAYSHomework\bin\EntityFramework.dll
-c:\users\paula\documents\visual studio 2015\Projects\UNiDAYSHomework\UNiDAYSHomework\bin\EntityFramework.SqlServer.dll
-c:\users\paula\documents\visual studio 2015\Projects\UNiDAYSHomework\UNiDAYSHomework\bin\EntityFramework.xml
-c:\users\paula\documents\visual studio 2015\Projects\UNiDAYSHomework\UNiDAYSHomework\bin\EntityFramework.SqlServer.xml
 C:\Users\paula.besson\Documents\Visual Studio 2015\Projects\personalproject\UNiDAYSHomework\UNiDAYSHomework\bin\ApplicationInsights.config
 C:\Users\paula.besson\Documents\Visual Studio 2015\Projects\personalproject\UNiDAYSHomework\UNiDAYSHomework\bin\roslyn\csc.exe
 C:\Users\paula.besson\Documents\Visual Studio 2015\Projects\personalproject\UNiDAYSHomework\UNiDAYSHomework\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll

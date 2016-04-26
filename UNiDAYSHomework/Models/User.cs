@@ -18,5 +18,8 @@ namespace UNiDAYSHomework.Models
         [Required]
         [StringLength(32, MinimumLength = 6, ErrorMessage = "Password must be between 6 and 32 characters long.")]
         public string Password { get; set; }
+
+        //used to store post-encrypted password
+        public string EncryptedPassword { get; set; }
     }
 }
