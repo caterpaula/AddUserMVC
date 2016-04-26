@@ -24,7 +24,7 @@ namespace UNiDAYSHomework.Controllers
             if (ModelState.IsValid)
             {
                 var newUser = ProcessNewUser(user);
-                InsertUser(newUser);
+                PersistUser(newUser);
 
                 TempData["SuccessMessage"] = "New user successfully added.";
 
@@ -49,7 +49,7 @@ namespace UNiDAYSHomework.Controllers
         }
 
 
-        public void InsertUser(User newUser)
+        public void PersistUser(User newUser)
         {
             string query =
                 "insert into Users (UserID, EmailAddress, Password) values (@UserID, @EmailAddress, @Password)";
