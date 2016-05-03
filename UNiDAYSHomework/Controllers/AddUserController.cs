@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using UNiDAYSHomework.Models;
 using UNiDAYSHomework.Utilities;
 using System.Collections.Generic;
+using UNiDAYSHomework.DataAccess;
 
 namespace UNiDAYSHomework.Controllers
 {
@@ -51,18 +52,7 @@ namespace UNiDAYSHomework.Controllers
 
         public void PersistUser(User newUser)
         {
-            string query =
-                "insert into Users (UserID, EmailAddress, Password) values (@UserID, @EmailAddress, @Password)";
-
-            //create a dictionary of paramers and their values to pass to ExecuteDbQuery method
-            Dictionary<string, object> queryParameters = new Dictionary<string, object>()
-            {
-                { "@UserID", newUser.UserID},
-                { "@EmailAddress", newUser.EmailAddress },
-                { "@Password", newUser.EncryptedPassword }
-            };
-
-            DataAccessUtils.ExecuteDbQuery(query, queryParameters);
+            SQLAccess.CreateUserQuery(newUser);
         }
     }
 }
