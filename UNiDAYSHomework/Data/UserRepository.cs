@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using UNiDAYSHomework.Models;
 using UNiDAYSHomework.Utilities;
 
-namespace UNiDAYSHomework.DataAccess
+namespace UNiDAYSHomework.Data
 {
-    public class SQLAccess
+    public class UserRepository
     {
-        public static void CreateUserQuery(User newUser)
+        public void CreateUser(User newUser)
         {
             string query =
             "insert into Users (UserID, EmailAddress, Password) values (@UserID, @EmailAddress, @Password)";
@@ -25,6 +23,15 @@ namespace UNiDAYSHomework.DataAccess
             DataAccessUtils.ExecuteDbQuery(query, queryParameters);
         }
 
+        public void GetUserByID(Guid userID)
+        {
+
+        }
+
+        public void UpdateUser(User currentUser)
+        {
+
+        }
 
     }
 }

@@ -2,8 +2,7 @@
 using System.Web.Mvc;
 using UNiDAYSHomework.Models;
 using UNiDAYSHomework.Utilities;
-using System.Collections.Generic;
-using UNiDAYSHomework.DataAccess;
+using UNiDAYSHomework.Data;
 
 namespace UNiDAYSHomework.Controllers
 {
@@ -52,7 +51,9 @@ namespace UNiDAYSHomework.Controllers
 
         public void PersistUser(User newUser)
         {
-            SQLAccess.CreateUserQuery(newUser);
+            UserRepository repository = new UserRepository();
+
+            repository.CreateUser(newUser);
         }
     }
 }
