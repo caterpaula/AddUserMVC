@@ -7,10 +7,25 @@ namespace UNiDAYSHomework.Data
 {
     public class UserRepository
     {
+        Gateway gateway;
+
+        public UserRepository(Gateway gateway)
+        {
+            this.gateway = gateway;
+        }
+
         public void CreateUser(User newUser)
         {
-            string query =
-            "insert into Users (UserID, EmailAddress, Password) values (@UserID, @EmailAddress, @Password)";
+            string query = @"
+                insert into Users (
+                    UserID
+                    , EmailAddress
+                    , Password
+                ) values (
+                    @UserID
+                    , @EmailAddress
+                    , @Password
+                )";
 
             //create a dictionary of paramers and their values to pass to ExecuteDbQuery method
             Dictionary<string, object> queryParameters = new Dictionary<string, object>()
@@ -19,13 +34,16 @@ namespace UNiDAYSHomework.Data
                 { "@EmailAddress", newUser.EmailAddress },
                 { "@Password", newUser.EncryptedPassword }
             };
-
-            DataAccessUtils.ExecuteDbQuery(query, queryParameters);
+            
+            gateway.ExecuteDbQuery(query, queryParameters);
         }
 
         public void GetUserByID(Guid userID)
         {
-
+            string query = @"
+                SELECT EmailAddress from Users
+                WHERE 
+                    UserID = " + userID;
         }
 
         public void UpdateUser(User currentUser)

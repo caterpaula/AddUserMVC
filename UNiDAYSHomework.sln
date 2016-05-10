@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UNiDAYSHomework", "UNiDAYSHomework\UNiDAYSHomework.csproj", "{B2182E88-EDCA-4A66-8B2D-396B6592B5DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UNiDAYSHomework.Test", "UNiDAYSHomework.Test\UNiDAYSHomework.Test.csproj", "{1B7B05B7-DC13-49FC-B01C-7FF7910144DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B2182E88-EDCA-4A66-8B2D-396B6592B5DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2182E88-EDCA-4A66-8B2D-396B6592B5DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2182E88-EDCA-4A66-8B2D-396B6592B5DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B7B05B7-DC13-49FC-B01C-7FF7910144DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B7B05B7-DC13-49FC-B01C-7FF7910144DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B7B05B7-DC13-49FC-B01C-7FF7910144DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B7B05B7-DC13-49FC-B01C-7FF7910144DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

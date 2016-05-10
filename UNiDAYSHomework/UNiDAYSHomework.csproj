@@ -175,7 +175,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AddUserController.cs" />
     <Compile Include="Data\UserRepository.cs" />
-    <Compile Include="DataAccess\DataAccessUtils.cs" />
+    <Compile Include="DataAccess\Gateway.cs" />
     <Compile Include="Utilities\EncryptionUtils.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

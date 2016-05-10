@@ -1,21 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Web.Configuration;
 
 namespace UNiDAYSHomework.Utilities
 {
-    public class DataAccessUtils
+    public class Gateway
     {
-        //abstracted to be more generic - now takes a query and dictionary of params, can be reused for other DB queries
-        public static int ExecuteDbQuery(string query, Dictionary<string, object> queryParams)
+
+        string SQLConnectionString;
+
+        public Gateway(string connectionString)
         {
-            int effectedLines;
+            this.SQLConnectionString = connectionString;
+        }
+
+        //abstracted to be more generic - now takes a query and dictionary of params, can be reused for other DB queries
+        public int ExecuteDbQuery(string query, Dictionary<string, object> queryParams)
+        {
+            int affectedLines;
 
             //using ensures that the connection and command are disposed of even if an exception occurs
             //this is due to SqlConnection and SqlCommand both implementing the IDisposable interface
-            using (
-                SqlConnection con =
-                    new SqlConnection(WebConfigurationManager.ConnectionStrings["UNiDAYSDB"].ConnectionString))
+            using (SqlConnection con = new SqlConnection(SQLConnectionString))
             using (SqlCommand cmd = con.CreateCommand())
             {
                 con.Open();
@@ -29,11 +34,11 @@ namespace UNiDAYSHomework.Utilities
                     cmd.Parameters.AddWithValue(entry.Key, entry.Value);
                 }
 
-                effectedLines = cmd.ExecuteNonQuery();
+                affectedLines = cmd.ExecuteNonQuery();
                 con.Close();
             }
 
-            return effectedLines;
+            return affectedLines;
         }
 
     }

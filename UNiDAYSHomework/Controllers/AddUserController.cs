@@ -3,11 +3,22 @@ using System.Web.Mvc;
 using UNiDAYSHomework.Models;
 using UNiDAYSHomework.Utilities;
 using UNiDAYSHomework.Data;
+using System.Web.Configuration;
 
 namespace UNiDAYSHomework.Controllers
 {
     public class AddUserController : Controller
     {
+        private Gateway gateway;
+        private UserRepository repository;
+
+        public AddUserController()
+        {
+            this.gateway = new Gateway(WebConfigurationManager.ConnectionStrings["UNiDAYSDB"].ConnectionString);
+
+            this.repository = new UserRepository(gateway);
+        }
+
         // GET: /AddUser
         // GET: /AddUser/Create
         public ActionResult Create()
@@ -24,7 +35,7 @@ namespace UNiDAYSHomework.Controllers
             if (ModelState.IsValid)
             {
                 var newUser = ProcessNewUser(user);
-                PersistUser(newUser);
+                this.repository.CreateUser(newUser);
 
                 TempData["SuccessMessage"] = "New user successfully added.";
 
@@ -50,9 +61,7 @@ namespace UNiDAYSHomework.Controllers
 
 
         public void PersistUser(User newUser)
-        {
-            UserRepository repository = new UserRepository();
-
+        {          
             repository.CreateUser(newUser);
         }
     }
