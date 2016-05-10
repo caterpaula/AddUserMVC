@@ -26,6 +26,7 @@ namespace UNiDAYSHomework
         {
             AreaRegistration.RegisterAllAreas();
             RegisterRoutes(RouteTable.Routes);
+
         }
     }
 }

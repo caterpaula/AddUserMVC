@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Web.Mvc;
 using UNiDAYSHomework.Models;
-using UNiDAYSHomework.Utilities;
+using UNiDAYSHomework.DataAccess;
 using UNiDAYSHomework.Data;
 using System.Web.Configuration;
+using UNiDAYSHomework.Utilities;
 
 namespace UNiDAYSHomework.Controllers
 {
     public class AddUserController : Controller
     {
-        private Gateway gateway;
-        private UserRepository repository;
+        IGateway gateway;
+        IUserRepository repository;
 
-        public AddUserController()
+        public AddUserController(IGateway gateway, IUserRepository userRepository)
         {
-            this.gateway = new Gateway(WebConfigurationManager.ConnectionStrings["UNiDAYSDB"].ConnectionString);
-
-            this.repository = new UserRepository(gateway);
+            this.gateway = gateway;
+            this.repository = userRepository;
         }
 
         // GET: /AddUser
@@ -49,7 +49,7 @@ namespace UNiDAYSHomework.Controllers
         }
 
         //use ProcessNewUser method to create db ready user object, including GUID + encrypted password
-        public User ProcessNewUser(User newUserRequest)
+        private User ProcessNewUser(User newUserRequest)
         {
             User newUser = new User();
             newUser.UserID = Guid.NewGuid();
@@ -59,10 +59,5 @@ namespace UNiDAYSHomework.Controllers
             return newUser;
         }
 
-
-        public void PersistUser(User newUser)
-        {          
-            repository.CreateUser(newUser);
-        }
     }
 }

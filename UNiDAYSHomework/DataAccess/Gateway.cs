@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
+using UNiDAYSHomework.DataAccess;
 
-namespace UNiDAYSHomework.Utilities
+namespace UNiDAYSHomework.DataAccess
 {
-    public class Gateway
+    public class Gateway : IGateway
     {
 
         string SQLConnectionString;
@@ -14,7 +15,7 @@ namespace UNiDAYSHomework.Utilities
         }
 
         //abstracted to be more generic - now takes a query and dictionary of params, can be reused for other DB queries
-        public int ExecuteDbQuery(string query, Dictionary<string, object> queryParams)
+        public int ExecuteDbQueryWithParams(string query, Dictionary<string, object> queryParams)
         {
             int affectedLines;
 

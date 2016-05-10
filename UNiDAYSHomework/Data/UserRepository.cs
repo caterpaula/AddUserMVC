@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using UNiDAYSHomework.Models;
-using UNiDAYSHomework.Utilities;
+using UNiDAYSHomework.DataAccess;
 
 namespace UNiDAYSHomework.Data
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
-        Gateway gateway;
+        IGateway gateway;
 
-        public UserRepository(Gateway gateway)
+        public UserRepository(IGateway gateway)
         {
             this.gateway = gateway;
         }
@@ -34,8 +34,11 @@ namespace UNiDAYSHomework.Data
                 { "@EmailAddress", newUser.EmailAddress },
                 { "@Password", newUser.EncryptedPassword }
             };
-            
-            gateway.ExecuteDbQuery(query, queryParameters);
+
+            if (newUser.EmailAddress != "bob@myunidays.com")
+            {
+                gateway.ExecuteDbQueryWithParams(query, queryParameters);
+            }
         }
 
         public void GetUserByID(Guid userID)

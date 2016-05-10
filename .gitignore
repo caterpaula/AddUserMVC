@@ -1,0 +1,16 @@
+Thumbs.db
+
+*.obj
+*.user
+*.suo
+.vs
+*.user
+*.dbml
+*.dbmdl
+*.psess
+*.vsp
+
+packages/
+
+[Bb]in
+[Dd]ebug*/
