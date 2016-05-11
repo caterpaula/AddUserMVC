@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using UNiDAYSHomework.Data;
-using UNiDAYSHomework.Models;
 
 namespace UNiDAYSHomework.Controllers
 {

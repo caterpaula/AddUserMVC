@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using System.Collections.Generic;
+using System.Data.Common;
 using UNiDAYSHomework.Data;
 using UNiDAYSHomework.DataAccess;
 using UNiDAYSHomework.Models;
@@ -63,7 +65,7 @@ namespace UNiDAYSHomework.Test
 
             var gateway = Substitute.For<IGateway>();
 
-            gateway.ReturnUsers(Arg.Any<string>()).Returns(mockUserList);
+            gateway.ReturnQueryResults(Arg.Any<string>(), Arg.Any<Func<DbDataReader, User>>()).Returns(mockUserList);
 
             IUserRepository userRepository = new UserRepository(gateway);
 

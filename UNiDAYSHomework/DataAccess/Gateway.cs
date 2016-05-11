@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.SqlClient;
 using UNiDAYSHomework.DataAccess;
 using UNiDAYSHomework.Models;
@@ -45,35 +46,32 @@ namespace UNiDAYSHomework.DataAccess
         }
 
 
-        public List<User> ReturnUsers(string query)
+        public List<T> ReturnQueryResults<T>(string query, Func<DbDataReader, T> returnfromReader)
         {
 
-            var users = new List<User>();
+            var returnList = new List<T>();
 
             using (var con = new SqlConnection(SQLConnectionString))
             using (var cmd = con.CreateCommand())
             {
                 con.Open();
-
                 cmd.CommandText = query;
 
-                var rdr = cmd.ExecuteReader();
-
-                while (rdr.Read())
+                using (var rdr = cmd.ExecuteReader())
                 {
-                    var user = new User
+                    while (rdr.Read())
                     {
-                        UserID = (Guid) rdr["UserID"],
-                        EmailAddress = (string) rdr["EmailAddress"]
-                    };
+                        var t = returnfromReader(rdr);
 
-                    users.Add(user);
+                        returnList.Add(t);
+                    }
                 }
-                
+
                 con.Close();
             }
 
-            return users;
+            return returnList;
         }
+
     }
 }

@@ -45,7 +45,7 @@ namespace UNiDAYSHomework.Controllers
         }
 
         //use ProcessNewUser method to create db ready user object, including GUID + encrypted password
-        private User ProcessNewUser(User newUserRequest)
+        private static User ProcessNewUser(User newUserRequest)
         {
             var newUser = new User
             {

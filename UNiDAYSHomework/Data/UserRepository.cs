@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using UNiDAYSHomework.Models;
 using UNiDAYSHomework.DataAccess;
 
@@ -49,7 +50,18 @@ namespace UNiDAYSHomework.Data
                 FROM Users
                 ";
 
-            return gateway.ReturnUsers(query);
+
+            return gateway.ReturnQueryResults(query, ReadUser);
+        }
+
+        public User ReadUser(DbDataReader reader)
+        {
+            var user = new User
+            {
+                UserID = (Guid)reader["UserID"],
+                EmailAddress = (string)reader["EmailAddress"]
+            };
+            return user;
         }
 
     }
