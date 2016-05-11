@@ -38,7 +38,7 @@ namespace UNiDAYSHomework.Data
 
             if (newUser.EmailAddress != "bob@myunidays.com")
             {
-                gateway.ExecuteDbQueryWithParams(query, queryParameters);
+                gateway.ExecuteDbQuery(query, queryParameters);
             }
         }
             
@@ -49,36 +49,35 @@ namespace UNiDAYSHomework.Data
                     , EmailAddress
                 FROM Users
                 ";
-
-
+            
             return gateway.ReturnQueryResults(query, null, ReadUser);
         }
 
-        public User FindUserByEmail(string userEmail)
-        {
-            string query = @"
-                SELECT UserID
-                    , EmailAddress
-                FROM Users WHERE
-                    EmailAddress = @EmailAddress
-                ";
+        //public User FindUserByEmail(string userEmail)
+        //{
+        //    string query = @"
+        //        SELECT UserID
+        //            , EmailAddress
+        //        FROM Users WHERE
+        //            EmailAddress = @EmailAddress
+        //        ";
 
-            var queryParameters = new Dictionary<string, object>()
-            {
-                { "@EmailAddress", userEmail }
-            };
+        //    var queryParameters = new Dictionary<string, object>()
+        //    {
+        //        { "@EmailAddress", userEmail }
+        //    };
 
-            var users = gateway.ReturnQueryResults(query, queryParameters, ReadUser);
+        //    var users = gateway.ReturnQueryResults(query, queryParameters, ReadUser);
 
-            return users[0];
-        }
+        //    return users[0];
+        //}
 
         public User ReadUser(DbDataReader reader)
         {
             var user = new User
             {
-                UserID = (Guid)reader["UserID"],
-                EmailAddress = (string)reader["EmailAddress"]
+                UserID = reader.GetGuid(0),
+                EmailAddress = reader.IsDBNull(1) ? null : reader.GetString(1)
             };
             return user;
         }

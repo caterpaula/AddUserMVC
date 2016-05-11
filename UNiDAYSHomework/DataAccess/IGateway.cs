@@ -7,7 +7,7 @@ namespace UNiDAYSHomework.DataAccess
 {
     public interface IGateway
     {
-        int ExecuteDbQueryWithParams(string query, Dictionary<string, object> queryParams);
+        int ExecuteDbQuery(string query, Dictionary<string, object> queryParams);
         List<T> ReturnQueryResults<T>(string query, Dictionary<string, object> queryParams, Func<DbDataReader, T> userFunc);
     }
 }

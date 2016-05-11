@@ -23,7 +23,7 @@ namespace UNiDAYSHomework.Test
 
             userRepository.CreateUser(user);
 
-            gateway.Received().ExecuteDbQueryWithParams(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>());
+            gateway.Received().ExecuteDbQuery(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>());
 
         }
 
@@ -39,7 +39,7 @@ namespace UNiDAYSHomework.Test
 
             userRepository.CreateUser(user);
 
-            gateway.Received().ExecuteDbQueryWithParams(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>());
+            gateway.Received().ExecuteDbQuery(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>());
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace UNiDAYSHomework.Test
 
             userRepository.CreateUser(user);
 
-            gateway.DidNotReceive().ExecuteDbQueryWithParams(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>());
+            gateway.DidNotReceive().ExecuteDbQuery(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>());
         }
 
         [Test]

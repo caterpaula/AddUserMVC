@@ -7,9 +7,9 @@ namespace UNiDAYSHomework.Utilities
     {
         public static string Md5Hash(string stringToEncrypt)
         {
-            byte[] bs = Encoding.UTF8.GetBytes(stringToEncrypt);
-            StringBuilder s = new StringBuilder();
-            using (MD5CryptoServiceProvider x = new MD5CryptoServiceProvider())
+            var bs = Encoding.UTF8.GetBytes(stringToEncrypt);
+            var s = new StringBuilder();
+            using (var x = new MD5CryptoServiceProvider())
             {
                 bs = x.ComputeHash(bs);
                 foreach (byte b in bs)

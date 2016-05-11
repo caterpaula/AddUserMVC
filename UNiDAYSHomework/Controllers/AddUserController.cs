@@ -28,20 +28,23 @@ namespace UNiDAYSHomework.Controllers
         public ActionResult Create(User user)
         {
             //check if User object passed in is valid - checks against data annotations in model
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(user);
+
+            var newUser = ProcessNewUser(user);
+
+            TempData["SuccessMessage"] = "New user successfully added.";
+
+            try
             {
-                var newUser = ProcessNewUser(user);
                 this.repository.CreateUser(newUser);
-
-                TempData["SuccessMessage"] = "New user successfully added.";
-
-                return RedirectToAction("Create");
             }
-            else
+            catch (Exception ex)
             {
-                //returns model error messages if model is not valid
-                return View(user);
+                TempData["SuccessMessage"] = "An error occured and you were not added to the database. Please try again later.";
             }
+
+            return RedirectToAction("Create");
+            //returns model error messages if model is not valid
         }
 
         //use ProcessNewUser method to create db ready user object, including GUID + encrypted password

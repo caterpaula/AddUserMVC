@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
-using UNiDAYSHomework.DataAccess;
-using UNiDAYSHomework.Models;
+using System.Diagnostics;
 
 namespace UNiDAYSHomework.DataAccess
 {
@@ -18,9 +17,9 @@ namespace UNiDAYSHomework.DataAccess
         }
 
         //abstracted to be more generic - now takes a query and dictionary of params, can be reused for other DB queries
-        public int ExecuteDbQueryWithParams(string query, Dictionary<string, object> queryParams)
+        public int ExecuteDbQuery(string query, Dictionary<string, object> queryParams)
         {
-            int affectedLines;
+            int affectedLines = -1;
 
             //using ensures that the connection and command are disposed of even if an exception occurs
             //this is due to SqlConnection and SqlCommand both implementing the IDisposable interface
@@ -38,7 +37,16 @@ namespace UNiDAYSHomework.DataAccess
                     cmd.Parameters.AddWithValue(entry.Key, entry.Value);
                 }
 
-                affectedLines = cmd.ExecuteNonQuery();
+                try
+                {
+                    affectedLines = cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                    throw;
+                }
+
                 con.Close();
             }
 
@@ -63,17 +71,25 @@ namespace UNiDAYSHomework.DataAccess
                     cmd.Parameters.AddWithValue(entry.Key, entry.Value);
                 }
 
-                using (var rdr = cmd.ExecuteReader())
+                try
                 {
-                    while (rdr.Read())
+                    using (var rdr = cmd.ExecuteReader())
                     {
-                        var t = returnfromReader(rdr);
+                        while (rdr.Read())
+                        {
+                            var t = returnfromReader(rdr);
 
-                        returnList.Add(t);
+                            returnList.Add(t);
+                        }
                     }
                 }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                    throw;
+                }
 
-                con.Close();
+            con.Close();
             }
 
             return returnList;
