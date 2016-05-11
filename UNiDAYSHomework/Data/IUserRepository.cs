@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Common;
 using UNiDAYSHomework.Models;
 
 namespace UNiDAYSHomework.Data
@@ -7,5 +8,6 @@ namespace UNiDAYSHomework.Data
     {
         void CreateUser(User newUser);
         List<User> ListAllUsers();
+        User ReadUser(DbDataReader reader);
     }
 }

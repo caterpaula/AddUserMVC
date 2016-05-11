@@ -51,7 +51,26 @@ namespace UNiDAYSHomework.Data
                 ";
 
 
-            return gateway.ReturnQueryResults(query, ReadUser);
+            return gateway.ReturnQueryResults(query, null, ReadUser);
+        }
+
+        public User FindUserByEmail(string userEmail)
+        {
+            string query = @"
+                SELECT UserID
+                    , EmailAddress
+                FROM Users WHERE
+                    EmailAddress = @EmailAddress
+                ";
+
+            var queryParameters = new Dictionary<string, object>()
+            {
+                { "@EmailAddress", userEmail }
+            };
+
+            var users = gateway.ReturnQueryResults(query, queryParameters, ReadUser);
+
+            return users[0];
         }
 
         public User ReadUser(DbDataReader reader)

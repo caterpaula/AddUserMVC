@@ -46,16 +46,22 @@ namespace UNiDAYSHomework.DataAccess
         }
 
 
-        public List<T> ReturnQueryResults<T>(string query, Func<DbDataReader, T> returnfromReader)
+        public List<T> ReturnQueryResults<T>(string query, Dictionary<string, object> queryParams, Func<DbDataReader, T> returnfromReader)
         {
 
             var returnList = new List<T>();
 
+            
             using (var con = new SqlConnection(SQLConnectionString))
             using (var cmd = con.CreateCommand())
             {
                 con.Open();
                 cmd.CommandText = query;
+
+                foreach (KeyValuePair<string, object> entry in queryParams)
+                {
+                    cmd.Parameters.AddWithValue(entry.Key, entry.Value);
+                }
 
                 using (var rdr = cmd.ExecuteReader())
                 {
