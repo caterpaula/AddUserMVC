@@ -28,7 +28,7 @@ namespace UNiDAYSHomework.Data
                 )";
 
             //create a dictionary of parameters and their values to pass to ExecuteDbQuery method
-            Dictionary<string, object> queryParameters = new Dictionary<string, object>()
+            var queryParameters = new Dictionary<string, object>()
             {
                 { "@UserID", newUser.UserID},
                 { "@EmailAddress", newUser.EmailAddress },
@@ -41,9 +41,15 @@ namespace UNiDAYSHomework.Data
             }
         }
             
-        public void ListUsers()
+        public List<User> ListAllUsers()
         {
+            string query = @"
+                SELECT UserID
+                    , EmailAddress
+                FROM Users
+                ";
 
+            return gateway.ReturnUsers(query);
         }
 
     }

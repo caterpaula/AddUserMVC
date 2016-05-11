@@ -9,7 +9,7 @@ namespace UNiDAYSHomework.Test
     public class GatewayTest
     {
         [Test]
-        public void ShouldExecuteDBQueryWithParams()
+        public void ShouldExecuteDbQueryWithParams()
         {
             IGateway gateway = new Gateway("Server=localhost;Database=UNiDAYSHomeworkTest;Trusted_Connection=True;");
 
@@ -25,7 +25,7 @@ namespace UNiDAYSHomework.Test
                 )";
 
             //create a dictionary of paramers and their values to pass to ExecuteDbQuery method
-            Dictionary<string, object> queryParameters = new Dictionary<string, object>()
+            var queryParameters = new Dictionary<string, object>()
             {
                 { "@UserID", Guid.NewGuid() },
                 { "@EmailAddress", "paula.besson@myunidays.com" },

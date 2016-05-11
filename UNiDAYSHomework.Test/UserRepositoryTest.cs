@@ -25,7 +25,6 @@ namespace UNiDAYSHomework.Test
 
         }
 
-
         [Test]
         public void ShouldAcceptAlice()
         {
@@ -33,9 +32,8 @@ namespace UNiDAYSHomework.Test
 
             IUserRepository userRepository = new UserRepository(gateway);
 
-            var user = new User();
+            var user = new User {EmailAddress = "alice@myunidays.com"};
 
-            user.EmailAddress = "alice@myunidays.com";
 
             userRepository.CreateUser(user);
 
@@ -49,13 +47,29 @@ namespace UNiDAYSHomework.Test
 
             IUserRepository userRepository = new UserRepository(gateway);
 
-            var user = new User();
+            var user = new User {EmailAddress = "bob@myunidays.com"};
 
-            user.EmailAddress = "bob@myunidays.com";
 
             userRepository.CreateUser(user);
 
             gateway.DidNotReceive().ExecuteDbQueryWithParams(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>());
+        }
+
+        [Test]
+        public void ShouldListUsers()
+        {
+
+            var mockUserList = new List<User>();
+
+            var gateway = Substitute.For<IGateway>();
+
+            gateway.ReturnUsers(Arg.Any<string>()).Returns(mockUserList);
+
+            IUserRepository userRepository = new UserRepository(gateway);
+
+            var returnedUsers = userRepository.ListAllUsers();
+
+            Assert.AreEqual(mockUserList, returnedUsers);
         }
     }
 }

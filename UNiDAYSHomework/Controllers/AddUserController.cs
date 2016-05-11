@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using UNiDAYSHomework.Models;
-using UNiDAYSHomework.DataAccess;
 using UNiDAYSHomework.Data;
-using System.Web.Configuration;
 using UNiDAYSHomework.Utilities;
 
 namespace UNiDAYSHomework.Controllers
@@ -49,10 +47,12 @@ namespace UNiDAYSHomework.Controllers
         //use ProcessNewUser method to create db ready user object, including GUID + encrypted password
         private User ProcessNewUser(User newUserRequest)
         {
-            User newUser = new User();
-            newUser.UserID = Guid.NewGuid();
-            newUser.EmailAddress = newUserRequest.EmailAddress;
-            newUser.EncryptedPassword = EncryptionUtils.Md5Hash(newUserRequest.Password);
+            var newUser = new User
+            {
+                UserID = Guid.NewGuid(),
+                EmailAddress = newUserRequest.EmailAddress,
+                EncryptedPassword = EncryptionUtils.Md5Hash(newUserRequest.Password)
+            };
 
             return newUser;
         }

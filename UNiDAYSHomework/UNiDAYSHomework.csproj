@@ -160,6 +160,7 @@
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\AddUser\Create.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\ListUsers\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -192,6 +193,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\AddUserController.cs" />
+    <Compile Include="Controllers\ListUsersController.cs" />
     <Compile Include="DataAccess\IGateway.cs" />
     <Compile Include="Data\IUserRepository.cs" />
     <Compile Include="Data\UserRepository.cs" />
