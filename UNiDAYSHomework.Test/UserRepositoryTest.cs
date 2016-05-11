@@ -1,12 +1,9 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UNiDAYSHomework.Data;
 using UNiDAYSHomework.DataAccess;
 using UNiDAYSHomework.Models;
+using NSubstitute;
 
 namespace UNiDAYSHomework.Test
 {
@@ -16,15 +13,15 @@ namespace UNiDAYSHomework.Test
         [Test]
         public void ShouldCreateUser()
         {
-            var mockGateway = new MockGateway();
+            var gateway = Substitute.For<IGateway>();
 
-            IUserRepository userRepository = new UserRepository(mockGateway);
+            IUserRepository userRepository = new UserRepository(gateway);
 
             var user = new User();
 
             userRepository.CreateUser(user);
 
-            Assert.IsTrue(mockGateway.functionCalled);
+            gateway.Received().ExecuteDbQueryWithParams(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>());
 
         }
 
@@ -32,9 +29,9 @@ namespace UNiDAYSHomework.Test
         [Test]
         public void ShouldAcceptAlice()
         {
-            var mockGateway = new MockGateway();
+            var gateway = Substitute.For<IGateway>();
 
-            IUserRepository userRepository = new UserRepository(mockGateway);
+            IUserRepository userRepository = new UserRepository(gateway);
 
             var user = new User();
 
@@ -42,15 +39,15 @@ namespace UNiDAYSHomework.Test
 
             userRepository.CreateUser(user);
 
-            Assert.IsTrue(mockGateway.functionCalled);
+            gateway.Received().ExecuteDbQueryWithParams(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>());
         }
 
         [Test]
         public void ShouldRejectBob()
         {
-            var mockGateway = new MockGateway();
+            var gateway = Substitute.For<IGateway>();
 
-            IUserRepository userRepository = new UserRepository(mockGateway);
+            IUserRepository userRepository = new UserRepository(gateway);
 
             var user = new User();
 
@@ -58,21 +55,7 @@ namespace UNiDAYSHomework.Test
 
             userRepository.CreateUser(user);
 
-            Assert.IsFalse(mockGateway.functionCalled);
+            gateway.DidNotReceive().ExecuteDbQueryWithParams(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>());
         }
-
-
-
-        class MockGateway : IGateway
-        {
-            public bool functionCalled;
-
-            public int ExecuteDbQueryWithParams(string query, Dictionary<string, object> queryParams)
-            {
-                functionCalled = true;
-                return 1;
-            }
-        }
-
     }
 }

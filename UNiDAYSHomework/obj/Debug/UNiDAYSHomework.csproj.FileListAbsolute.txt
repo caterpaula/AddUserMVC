@@ -197,3 +197,4 @@ D:\git\AddUserMVC\UNiDAYSHomework\bin\Microsoft.Practices.Unity.xml
 D:\git\AddUserMVC\UNiDAYSHomework\bin\Microsoft.Practices.Unity.Configuration.xml
 D:\git\AddUserMVC\UNiDAYSHomework\bin\Microsoft.Practices.Unity.Mvc.xml
 D:\git\AddUserMVC\UNiDAYSHomework\bin\Microsoft.Practices.Unity.RegistrationByConvention.xml
+D:\git\AddUserMVC\UNiDAYSHomework\obj\Debug\UNiDAYSHomework.csprojResolveAssemblyReference.cache

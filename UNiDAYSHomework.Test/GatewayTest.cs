@@ -9,7 +9,7 @@ namespace UNiDAYSHomework.Test
     public class GatewayTest
     {
         [Test]
-        public void ShouldExecuteDBQuery()
+        public void ShouldExecuteDBQueryWithParams()
         {
             IGateway gateway = new Gateway("Server=localhost;Database=UNiDAYSHomeworkTest;Trusted_Connection=True;");
 

@@ -10,12 +10,10 @@ namespace UNiDAYSHomework.Controllers
 {
     public class AddUserController : Controller
     {
-        IGateway gateway;
         IUserRepository repository;
 
-        public AddUserController(IGateway gateway, IUserRepository userRepository)
+        public AddUserController(IUserRepository userRepository)
         {
-            this.gateway = gateway;
             this.repository = userRepository;
         }
 
