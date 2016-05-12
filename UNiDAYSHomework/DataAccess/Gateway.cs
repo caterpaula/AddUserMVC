@@ -2,28 +2,27 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
-using System.Diagnostics;
 
 namespace UNiDAYSHomework.DataAccess
 {
     public class Gateway : IGateway
     {
-
-        string SQLConnectionString;
+        readonly string _sqlConnectionString;
 
         public Gateway(string connectionString)
         {
-            this.SQLConnectionString = connectionString;
+            this._sqlConnectionString = connectionString;
         }
 
         //abstracted to be more generic - now takes a query and dictionary of params, can be reused for other DB queries
-        public int ExecuteDbQuery(string query, Dictionary<string, object> queryParams)
+        public QueryResult<int> ExecuteDbQuery(string query, Dictionary<string, object> queryParams)
         {
-            int affectedLines = -1;
+
+            var queryResult = new QueryResult<int>();
 
             //using ensures that the connection and command are disposed of even if an exception occurs
             //this is due to SqlConnection and SqlCommand both implementing the IDisposable interface
-            using (var con = new SqlConnection(SQLConnectionString))
+            using (var con = new SqlConnection(_sqlConnectionString))
             using (var cmd = con.CreateCommand())
             {
                 con.Open();
@@ -32,43 +31,48 @@ namespace UNiDAYSHomework.DataAccess
 
                 //parameterize values to prevent SQL injections
 
-                foreach (KeyValuePair<string, object> entry in queryParams)
+                foreach (var entry in queryParams)
                 {
                     cmd.Parameters.AddWithValue(entry.Key, entry.Value);
                 }
 
                 try
                 {
-                    affectedLines = cmd.ExecuteNonQuery();
+                    queryResult.Results = cmd.ExecuteNonQuery();
+                    queryResult.WasSuccessful = true;
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e);
-                    throw;
+                    queryResult.Results = -1;
+                    queryResult.WasSuccessful = false;
+                    queryResult.Feedback = e.Message;
                 }
 
                 con.Close();
             }
 
-            return affectedLines;
+            return queryResult;
         }
 
 
-        public List<T> ReturnQueryResults<T>(string query, Dictionary<string, object> queryParams, Func<DbDataReader, T> returnfromReader)
+        public QueryResult<List<T>> ReturnQueryResults<T>(string query, Dictionary<string, object> queryParams, Func<DbDataReader, T> returnfromReader)
         {
+            var queryResult = new QueryResult<List<T>>();
 
-            var returnList = new List<T>();
+            var resultList = new List<T>();
 
-            
-            using (var con = new SqlConnection(SQLConnectionString))
+            using (var con = new SqlConnection(_sqlConnectionString))
             using (var cmd = con.CreateCommand())
             {
                 con.Open();
                 cmd.CommandText = query;
 
-                foreach (KeyValuePair<string, object> entry in queryParams)
+                if (queryParams != null)
                 {
-                    cmd.Parameters.AddWithValue(entry.Key, entry.Value);
+                    foreach (var entry in queryParams)
+                    {
+                        cmd.Parameters.AddWithValue(entry.Key, entry.Value);
+                    }
                 }
 
                 try
@@ -79,20 +83,23 @@ namespace UNiDAYSHomework.DataAccess
                         {
                             var t = returnfromReader(rdr);
 
-                            returnList.Add(t);
+                            resultList.Add(t);
                         }
+
+                        queryResult.WasSuccessful = true;
+                        queryResult.Results = resultList;
                     }
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e);
-                    throw;
+                    queryResult.WasSuccessful = false;
+                    queryResult.Feedback = e.Message;
                 }
 
-            con.Close();
+                con.Close();
             }
 
-            return returnList;
+            return queryResult;
         }
 
     }

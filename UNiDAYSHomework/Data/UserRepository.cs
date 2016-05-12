@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Diagnostics;
 using UNiDAYSHomework.Models;
 using UNiDAYSHomework.DataAccess;
 
@@ -41,7 +42,7 @@ namespace UNiDAYSHomework.Data
                 gateway.ExecuteDbQuery(query, queryParameters);
             }
         }
-            
+
         public List<User> ListAllUsers()
         {
             string query = @"
@@ -49,28 +50,17 @@ namespace UNiDAYSHomework.Data
                     , EmailAddress
                 FROM Users
                 ";
-            
-            return gateway.ReturnQueryResults(query, null, ReadUser);
+
+            var queryResult = gateway.ReturnQueryResults(query, null, ReadUser);
+
+            if (!queryResult.WasSuccessful)
+            {
+                Debug.Write(queryResult.Feedback);
+                return new List<User>();
+            }
+
+            return queryResult.Results;
         }
-
-        //public User FindUserByEmail(string userEmail)
-        //{
-        //    string query = @"
-        //        SELECT UserID
-        //            , EmailAddress
-        //        FROM Users WHERE
-        //            EmailAddress = @EmailAddress
-        //        ";
-
-        //    var queryParameters = new Dictionary<string, object>()
-        //    {
-        //        { "@EmailAddress", userEmail }
-        //    };
-
-        //    var users = gateway.ReturnQueryResults(query, queryParameters, ReadUser);
-
-        //    return users[0];
-        //}
 
         public User ReadUser(DbDataReader reader)
         {
@@ -81,6 +71,5 @@ namespace UNiDAYSHomework.Data
             };
             return user;
         }
-
     }
 }

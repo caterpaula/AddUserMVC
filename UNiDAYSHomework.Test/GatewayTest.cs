@@ -32,9 +32,9 @@ namespace UNiDAYSHomework.Test
                 { "@Password", "testpassword" }
             };
 
-            int expectedResult = gateway.ExecuteDbQuery(query, queryParameters);
+            var expectedResult = gateway.ExecuteDbQuery(query, queryParameters);
 
-            Assert.That(expectedResult, Is.EqualTo(1));
+            Assert.That(expectedResult.Results, Is.EqualTo(1));
         }
 
     }

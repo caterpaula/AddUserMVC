@@ -195,6 +195,7 @@
     <Compile Include="Controllers\AddUserController.cs" />
     <Compile Include="Controllers\ListUsersController.cs" />
     <Compile Include="DataAccess\IGateway.cs" />
+    <Compile Include="DataAccess\QueryResult.cs" />
     <Compile Include="Data\IUserRepository.cs" />
     <Compile Include="Data\UserRepository.cs" />
     <Compile Include="DataAccess\Gateway.cs" />

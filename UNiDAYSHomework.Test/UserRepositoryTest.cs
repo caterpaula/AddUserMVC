@@ -63,9 +63,11 @@ namespace UNiDAYSHomework.Test
 
             var mockUserList = new List<User>();
 
+            var queryResults = new QueryResult<List<User>>();
+
             var gateway = Substitute.For<IGateway>();
 
-            gateway.ReturnQueryResults(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>(), Arg.Any<Func<DbDataReader, User>>()).Returns(mockUserList);
+            gateway.ReturnQueryResults(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>(), Arg.Any<Func<DbDataReader, User>>()).Returns(queryResults);
 
             IUserRepository userRepository = new UserRepository(gateway);
 
