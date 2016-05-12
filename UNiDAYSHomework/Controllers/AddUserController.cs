@@ -6,7 +6,7 @@ using UNiDAYSHomework.Utilities;
 
 namespace UNiDAYSHomework.Controllers
 {
-    public class AddUserController : Controller
+    public sealed class AddUserController : Controller
     {
         IUserRepository repository;
 
@@ -32,19 +32,17 @@ namespace UNiDAYSHomework.Controllers
 
             var newUser = ProcessNewUser(user);
 
-            TempData["SuccessMessage"] = "New user successfully added.";
 
-            try
+            var queryResult = this.repository.CreateUser<int>(newUser);
+
+            TempData["SuccessMessage"] = "An error occured, please try again later.";
+
+            if (queryResult.WasSuccessful)
             {
-                this.repository.CreateUser(newUser);
-            }
-            catch (Exception ex)
-            {
-                TempData["SuccessMessage"] = "An error occured and you were not added to the database. Please try again later.";
+                TempData["SuccessMessage"] = "New user successfully added.";
             }
 
             return RedirectToAction("Create");
-            //returns model error messages if model is not valid
         }
 
         //use ProcessNewUser method to create db ready user object, including GUID + encrypted password
@@ -59,6 +57,5 @@ namespace UNiDAYSHomework.Controllers
 
             return newUser;
         }
-
     }
 }

@@ -16,7 +16,7 @@ namespace UNiDAYSHomework.Data
             this.gateway = gateway;
         }
 
-        public void CreateUser(User newUser)
+        public QueryResult<int> CreateUser<T>(User newUser)
         {
             string query = @"
                 insert into Users (
@@ -37,13 +37,17 @@ namespace UNiDAYSHomework.Data
                 { "@Password", newUser.EncryptedPassword }
             };
 
+            var queryResult = new QueryResult<int>();
+
             if (newUser.EmailAddress != "bob@myunidays.com")
             {
-                gateway.ExecuteDbQuery(query, queryParameters);
+                queryResult = gateway.ExecuteDbQuery(query, queryParameters);
             }
+
+            return queryResult;
         }
 
-        public List<User> ListAllUsers()
+        public QueryResult<List<User>> ListAllUsers<T>()
         {
             string query = @"
                 SELECT UserID
@@ -51,15 +55,8 @@ namespace UNiDAYSHomework.Data
                 FROM Users
                 ";
 
-            var queryResult = gateway.ReturnQueryResults(query, null, ReadUser);
+            return gateway.ReturnQueryResults(query, null, ReadUser);
 
-            if (!queryResult.WasSuccessful)
-            {
-                Debug.Write(queryResult.Feedback);
-                return new List<User>();
-            }
-
-            return queryResult.Results;
         }
 
         public User ReadUser(DbDataReader reader)

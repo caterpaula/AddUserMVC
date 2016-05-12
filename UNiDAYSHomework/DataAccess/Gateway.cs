@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace UNiDAYSHomework.DataAccess
 {
-    public class Gateway : IGateway
+    public sealed class Gateway : IGateway
     {
         readonly string _sqlConnectionString;
 
@@ -30,7 +30,6 @@ namespace UNiDAYSHomework.DataAccess
                 cmd.CommandText = query;
 
                 //parameterize values to prevent SQL injections
-
                 foreach (var entry in queryParams)
                 {
                     cmd.Parameters.AddWithValue(entry.Key, entry.Value);

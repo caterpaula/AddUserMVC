@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "No Users";
+}
+
+<h2>No Users</h2>
+
+@{
+    if (TempData["Feedback"] != null)
+    {
+        <div>@TempData["Feedback"]</div>
+    }
+}

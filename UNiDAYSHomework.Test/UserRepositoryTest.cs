@@ -21,7 +21,7 @@ namespace UNiDAYSHomework.Test
 
             var user = new User();
 
-            userRepository.CreateUser(user);
+            userRepository.CreateUser<int>(user);
 
             gateway.Received().ExecuteDbQuery(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>());
 
@@ -37,7 +37,7 @@ namespace UNiDAYSHomework.Test
             var user = new User {EmailAddress = "alice@myunidays.com"};
 
 
-            userRepository.CreateUser(user);
+            userRepository.CreateUser<int>(user);
 
             gateway.Received().ExecuteDbQuery(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>());
         }
@@ -52,7 +52,7 @@ namespace UNiDAYSHomework.Test
             var user = new User {EmailAddress = "bob@myunidays.com"};
 
 
-            userRepository.CreateUser(user);
+            userRepository.CreateUser<int>(user);
 
             gateway.DidNotReceive().ExecuteDbQuery(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>());
         }
@@ -71,9 +71,15 @@ namespace UNiDAYSHomework.Test
 
             IUserRepository userRepository = new UserRepository(gateway);
 
-            var returnedUsers = userRepository.ListAllUsers();
+            var returnedUsers = userRepository.ListAllUsers<List<User>>();
 
             Assert.AreEqual(mockUserList, returnedUsers);
+        }
+
+        [Test]
+        public void HowEliteAmI()
+        {
+
         }
     }
 }

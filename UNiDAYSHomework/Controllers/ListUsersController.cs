@@ -1,9 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using UNiDAYSHomework.Data;
+using UNiDAYSHomework.Models;
 
 namespace UNiDAYSHomework.Controllers
 {
-    public class ListUsersController : Controller
+    public sealed class ListUsersController : Controller
     {
 
         IUserRepository repository;
@@ -16,9 +18,28 @@ namespace UNiDAYSHomework.Controllers
         // GET: ListUsers
         public ActionResult Index()
         {
-            var users = this.repository.ListAllUsers();
 
-            return View(users);
+            var queryResult = this.repository.ListAllUsers<List<User>>();
+
+            if (queryResult.WasSuccessful)
+            {
+
+                if (queryResult.Results.Count > 0)
+                {
+                    return View(queryResult.Results);
+                }
+
+                TempData["Feedback"] = "No users currently listed.";
+                return RedirectToAction("NoUsers");
+            }
+
+            TempData["Feedback"] = "Database cannot be reached at this time. Please try again later.";
+            return RedirectToAction("NoUsers");
+        }
+
+        public ActionResult NoUsers()
+        {
+            return View();
         }
     }
 }
