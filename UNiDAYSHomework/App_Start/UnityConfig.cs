@@ -1,6 +1,5 @@
 using System;
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Configuration;
 using UNiDAYSHomework.Data;
 using UNiDAYSHomework.DataAccess;
 using System.Configuration;
